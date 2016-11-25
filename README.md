@@ -488,7 +488,6 @@ sendRequest(req)
 - 避免with语句
 
 ## 2.2 选择正确的方法
-- 避免不要的属性查找
 - 优化循环
     - `减值迭代`：从最大值开始，在循环中不断减值的迭代器更加高效
     - `简化终止条件`：由于每次循环过程都会计算终止条件，所以必须保证它尽可能快。也就是避免其他属性查找
@@ -565,6 +564,22 @@ function myGetElement(tag){
 }
 ```
 
+## 2.5 避免过长的属性查找，设置一个快捷方式
+```
+// 先看下面的极端情况
+app.user.mather.parent.home.name = 'wdd'
+app.user.mather.parent.home.adderess = '上海'
+app.user.mather.parent.home.weather = '晴天'
+
+// 更优雅的方式
+var home = app.user.mather.parent.home;
+home.name = 'wdd';
+home.address = '上海',
+home.weather = '晴天'
+```
+
+`注意`
+使用上面的方式是有前提的，必须保证app.user.mather.parent.home是一个对象，因为对象是传递的引用。如果他的类型是一个基本类型，例如：number,string,boolean，那么复制操作仅仅是值传递，新定义的home的改变，并不会影响到app.user.mather.parent.home的改变。
 
 
 # 部署
