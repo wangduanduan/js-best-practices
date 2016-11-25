@@ -2,6 +2,7 @@ JS最佳实践
 > 2016/10/25
 > create by wdd
 > 一直会更新
+> git:https://github.com/wangduanduan/JS-Best-Practices
 
 [TOC]
 
