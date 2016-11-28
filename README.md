@@ -645,7 +645,7 @@ app.user.mother.parent.home.adderess = '上海'
 app.user.mother.parent.home.weather = '晴天'
 
 // 更优雅的方式
-var home = app.user.mather.parent.home;
+var home = app.user.mother.parent.home;
 home.name = 'wdd';
 home.address = '上海',
 home.weather = '晴天'
