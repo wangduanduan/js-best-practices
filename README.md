@@ -640,9 +640,9 @@ function myGetElement(tag){
 ## 2.5 避免过长的属性查找，设置一个快捷方式
 ```
 // 先看下面的极端情况
-app.user.mather.parent.home.name = 'wdd'
-app.user.mather.parent.home.adderess = '上海'
-app.user.mather.parent.home.weather = '晴天'
+app.user.mother.parent.home.name = 'wdd'
+app.user.mother.parent.home.adderess = '上海'
+app.user.mother.parent.home.weather = '晴天'
 
 // 更优雅的方式
 var home = app.user.mather.parent.home;
