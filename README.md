@@ -481,6 +481,78 @@ sendRequest(req)
 
 假如前端要去接口获取用户信息并显示出来，如果你的请求格式是正确的，但是接口返回400以上的错误，你必须通过提醒来告知测试，这个错误是接口的返回错误，而不是前端的逻辑错误。
 
+### 1.4.8 REST化接口请求
+> 对资源的操作包括获取、创建、修改和删除资源，这些操作正好对应HTTP协议提供的GET、POST、PUT和DELETE方法。
+
+`对应方式`
+
+请求类型 | 接口前缀
+--- | ---
+GET | .get,
+POST | .create 或者 .get
+PUT | .update
+DELETE | .delete
+
+`说明`
+
+- 有些接口虽然是获取某一个资源，但是它使用的却是POST请求，所以建议使用.get比较好
+
+示例：
+```
+// 与用户相关的接口
+App.api.user = {};
+
+// 获取一个用户: 一般来说是一个指定的Id，例如userId
+App.api.user.getUser = function(){
+    ...
+};
+
+// 获取一组用户: 一般来说是一些条件，获取条件下的用户，筛选符合条件的用户
+App.api.user.getUsers = function(){
+    ...
+};
+
+// 创建一个用户
+App.api.user.createUser = function(){
+    
+};
+
+// 创建一组用户
+App.api.user.createUsers = function(){
+    
+};
+
+// 更新一个用户
+App.api.user.updateUser = function(){
+    
+};
+
+// 更新一组用户
+App.api.user.updateUsers = function(){
+    
+};
+
+// 更新一个用户
+App.api.user.updateUser = function(){
+    
+};
+
+// 更新一组用户
+App.api.user.updateUsers = function(){
+    
+};
+
+// 删除一个用户
+App.api.user.deleteUser = function(){
+    
+};
+
+// 删除一组用户
+App.api.user.deleteUsers = function(){
+    
+};
+```
+
 
 # 2 性能
 
