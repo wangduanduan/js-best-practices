@@ -299,6 +299,35 @@ ReqApi.tenant.queryUsers({},function(res){
 **异步请求只处理请求，不处理数据。函数的功能要专一，功能粒度不可分割。**
 
 
+### 1.3.4 不要将某个变量写死在函数中，尽量使用参数传递进来
+如果你需要一个函数去验证输入框是否是空，如下。这种方式就会绑定死了这个只能验证id为test的输入框，换成其他的就不行。如果将输入框的
+id通过id传递进来，那么就可以验证所有的输入框是否为空。
+这种凡是更加通用。
+```
+// bad
+function checkInputIsEmpty(){
+    var value = $('#test').val();
+    if(value){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+// good 
+function isEmptyInput(id){
+    var value = $('#'+id).val();
+    if(value){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+```
+
+
 ## 1.4 编程实践
 ### 1.4.1 尊总对象所有权
 javascript动态性质是的几乎任何东西在任何时间都能更改，这样就很容易覆写了一些默认的方法。导致一些灾难性的后果。`如果你不负责或者维护某个对象，那么你就不能对它进行修改。`
