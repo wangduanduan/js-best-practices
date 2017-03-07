@@ -1,5 +1,5 @@
 JS最佳实践
-> 2016/10/25
+> update 2017/03/07
 > create by wdd
 > 一直会更新
 > git:https://github.com/wangduanduan/JS-Best-Practices
@@ -298,11 +298,8 @@ ReqApi.tenant.queryUsers({},function(res){
 ```
 **异步请求只处理请求，不处理数据。函数的功能要专一，功能粒度不可分割。**
 
-
 ### 1.3.4 不要将某个变量写死在函数中，尽量使用参数传递进来
-如果你需要一个函数去验证输入框是否是空，如下。这种方式就会绑定死了这个只能验证id为test的输入框，换成其他的就不行。如果将输入框的
-id通过id传递进来，那么就可以验证所有的输入框是否为空。
-这种凡是更加通用。
+如果你需要一个函数去验证输入框是否是空，如下。这种方式就会绑定死了这个只能验证id为test的输入框，换成其他的就不行
 ```
 // bad
 function checkInputIsEmpty(){
@@ -582,17 +579,6 @@ App.api.user.deleteUsers = function(){
 };
 ```
 
-### 1.4.9 类型转换的快捷方式
-`"4.1" 转成 4.1`
-```
-+"4.1" === 4.1 // true
-```
-
-`4.1 转成 "4.1"`
-```
-4.1+"" === "4.1" // true
-```
-
 
 # 2 性能
 
@@ -623,20 +609,22 @@ setTimeout("alert('hello')");
     - 位运算符较快
 
 ## 2.3 最小化语句数
-### 多个变量声明
+### 多个变量声明(`废弃`)
 ```
-// Bad
+// 方式1：Bad
 var count = 5;
 var name = 'wdd';
 var sex = 'male';
 var age = 10;
 
-// Good
+// 方式2：Good
 var count = 5,
     name = 'wdd',
     sex = 'male',
     age = 10;
 ```
+`2017-03-07 理论上方式2可能要比方式1性能高一点。但是我在实际使用中，这个快一点几乎是没什么感受的。就像你无法感受到小草的生长一样。反而可读性更为重要。所以，每行最好只定义一个变量，并且每行都有一个var,并用分号结尾。`
+
 
 ### 插入迭代值
 ```
@@ -694,16 +682,57 @@ home.weather = '晴天'
 `注意`
 使用上面的方式是有前提的，必须保证app.user.mather.parent.home是一个对象，因为对象是传递的引用。如果他的类型是一个基本类型，例如：number,string,boolean，那么复制操作仅仅是值传递，新定义的home的改变，并不会影响到app.user.mather.parent.home的改变。
 
+# 3 快捷方式
+## 3.1 字符串转数字
+```
++'4.1' === 4.1
+```
 
-# 部署
+## 3.2 数字转字符
+```
+4.1+'' === '4.1'
+```
 
-## 构建过程
+## 3.3 字符串取整
+```
+'4.99' | 0 === 4
+```
 
-## 验证
 
-## 压缩
+# 4 推荐深度阅读
+## 4.1 关于技术
+- [《编写可读代码的艺术》][1]
+- [《编写可维护的JavaScript》][2]
+- [《JavaScript忍者秘籍》][3]
+- [《JavaScript: The Good Parts》][4]
+- [Writing Fast, Memory-Efficient JavaScript][5]
+- [JavaScript 秘密花园][6]
+- [You-Dont-Know-JS][7]
+- [《HTTP权威指南》][8]
+- [Caching Tutorial for Web Authors and Webmasters][9]
+
+## 4.2 技术之外
+- [《筑巢引凤-高黏度社会化网站设计秘诀》][10]
+- [《黑客与画家》][11]
+- [《大秦帝国》][12]
 
 # 参考文献
 - JavaScript高级程序设计(第3版) 【美】尼古拉斯·泽卡斯
 - Maintainable JavaScript (英文版) Nicholas C. Zakas(其实和上边那本书应该是同一个人)
 - JavaScript忍者秘籍 John Resig / Bear Bibeault （John Resig 大名鼎鼎jQuery的创造者）
+- [百度前端研发部 文档与源码编写风格][13]
+
+
+  [1]: https://book.douban.com/subject/10797189/
+  [2]: https://book.douban.com/subject/21792530/
+  [3]: https://book.douban.com/subject/26638316/
+  [4]: https://book.douban.com/subject/2994925/
+  [5]: https://www.smashingmagazine.com/2012/11/writing-fast-memory-efficient-javascript/
+  [6]: http://bonsaiden.github.io/JavaScript-Garden/zh/
+  [7]: https://github.com/getify/You-Dont-Know-JS
+  [8]: https://book.douban.com/subject/10746113/
+  [9]: https://www.mnot.net/cache_docs/
+  [10]: https://book.douban.com/subject/5290566/
+  [11]: https://book.douban.com/subject/6021440/
+  [12]: https://book.douban.com/subject/10539901/
+  [13]: https://github.com/fex-team/styleguide
