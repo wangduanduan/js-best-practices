@@ -698,9 +698,33 @@ home.weather = '晴天'
 '4.99' | 0 === 4
 ```
 
+# 4 通用编码原则
+## 4.1 DRY(dont't repeat yoursele: 不要重复你自己)
+## 4.2 高内聚低耦合
+## 4.3 开放闭合
+## 4.4 最小意外
+## 4.5 单一职责(single responsibility)
 
-# 4 推荐深度阅读
-## 4.1 关于技术
+# 5 高级技巧
+## 5.1 函数柯里化
+## 5
+
+# 6 函数式编程
+
+# 7 HTML的告诫
+- 使用input的时候，一定要加上maxlength属性。（你以为只需要输入一个名字的地方，用户可能复制一篇文章放进去。）
+- 从input取值的时候，最好去除一下首尾空格
+
+# 8 ajax的告诫
+ajax在使用的时候，例如点击按钮，获取某个列表。需要注意以下方面
+1. ajax请求还没有结束时，按钮一定要disabled，防止多次点击。请求结束时，才去掉按钮的disabled属性。
+2. 请求没结束的时候，一定要显示一个gif的动画，告诉用户请求还在loading。不要让用户以为这垃圾程序又卡死了。
+3. 请求的结果如果是空的，一定要告诉用户: 很抱歉，暂时没有查询到相关记录之类的话语。不要给一个空白页面给用户。
+4. 最好考虑到请求报错的情况，给出友好的错误提醒。
+
+
+# 推荐深度阅读
+## 关于技术
 - [《编写可读代码的艺术》][1]
 - [《编写可维护的JavaScript》][2]
 - [《JavaScript忍者秘籍》][3]
@@ -710,8 +734,9 @@ home.weather = '晴天'
 - [You-Dont-Know-JS][7]
 - [《HTTP权威指南》][8]
 - [Caching Tutorial for Web Authors and Webmasters][9]
+- 《代码整洁之道》
 
-## 4.2 技术之外
+## 技术之外
 - [《筑巢引凤-高黏度社会化网站设计秘诀》][10]
 - [《黑客与画家》][11]
 - [《大秦帝国》][12]
@@ -721,6 +746,8 @@ home.weather = '晴天'
 - Maintainable JavaScript (英文版) Nicholas C. Zakas(其实和上边那本书应该是同一个人)
 - JavaScript忍者秘籍 John Resig / Bear Bibeault （John Resig 大名鼎鼎jQuery的创造者）
 - [百度前端研发部 文档与源码编写风格][13]
+- [js函数式编程指南](https://llh911001.gitbooks.io/mostly-adequate-guide-chinese/content/)
+- [JavaScript SDK Design Guide: JavaScript-sdk设计指南](https://github.com/hueitan/javascript-sdk-design)
 
 
   [1]: https://book.douban.com/subject/10797189/
