@@ -595,6 +595,8 @@ App.api.user.deleteUsers = function(){
     - `简化循环体`：由于循环体是执行最多的，所以要确保其最大限度地优化。
 - 展开循环
 - 避免双重解释：
+
+
 ```
 // **Bad** 某些代码求值
 eval("alert('hello')");
@@ -605,13 +607,17 @@ var sayHi = new Function("alert('hello')");
 // **Bad** 设置超时
 setTimeout("alert('hello')");
 ```
+
 - 性能的其他注意事项
     - 原生方法较快
     - switch语句较快：可以适当的替换ifelse语句`case 的分支不要超过128条`
     - 位运算符较快
 
+
 ## 3.3. 最小化语句数
+
 ### 3.3.1. 多个变量声明(`废弃`)
+
 ```
 // 方式1：Bad
 var count = 5;
@@ -625,16 +631,21 @@ var count = 5,
     sex = 'male',
     age = 10;
 ```
+
+
 `2017-03-07 理论上方式2可能要比方式1性能高一点。但是我在实际使用中，这个快一点几乎是没什么感受的。就像你无法感受到小草的生长一样。反而可读性更为重要。所以，每行最好只定义一个变量，并且每行都有一个var,并用分号结尾。`
 
 
 ### 3.3.2. 插入迭代值
+
 ```
 // Good
 var name = values[i++];
 ```
 
 ### 3.3.3. 使用数组和对象字面量
+
+
 ```
 // Good
 var values = ['a','b','c'];
@@ -644,11 +655,14 @@ var person = {
     age:10
 };
 ```
+
 `只要有可能，尽量使用数组和对象字面量的表达式来消除不必要的语句`
 
 
 ## 3.4. 优化DOM交互
+
 > 在JavaScript各个方面中，DOM无疑是最慢的一部分。DOM操作与交互要消耗大量的时间。因为他们往往需要重新渲染整个页面或者某一部分。进一步说，看似细微的操作也可能花很久来执行。因为DOM要处理非常多的信息。理解如何优化与DOM的交互可以极大的提高脚本完成的速度。
+
 
 - 使用dom缓存技术
 - 最小化现场更新
@@ -656,7 +670,10 @@ var person = {
 - 使用事件代理
 
 ### 3.4.1. Dom缓存技术
+
 调用频率非常高的dom查找，可以将DOM缓存在于一个变量中
+
+
 ```
 // 最简单的dom缓存
 
@@ -667,7 +684,10 @@ function myGetElement(tag){
 }
 ```
 
+
 ## 3.5. 避免过长的属性查找，设置一个快捷方式
+
+
 ```
 // 先看下面的极端情况
 app.user.mother.parent.home.name = 'wdd'
@@ -685,33 +705,247 @@ home.weather = '晴天'
 使用上面的方式是有前提的，必须保证app.user.mather.parent.home是一个对象，因为对象是传递的引用。如果他的类型是一个基本类型，例如：number,string,boolean，那么复制操作仅仅是值传递，新定义的home的改变，并不会影响到app.user.mather.parent.home的改变。
 
 # 4. 快捷方式
+
 ## 4.1. 字符串转数字
+
 ```
 +'4.1' === 4.1
 ```
 
 ## 4.2. 数字转字符
+
 ```
 4.1+'' === '4.1'
 ```
 
 ## 4.3. 字符串取整
+
 ```
 '4.99' | 0 === 4
 ```
 
 # 5. 通用编码原则
-## 5.1. DRY(dont't repeat yoursele: 不要重复你自己)
-## 5.2. 高内聚低耦合
-## 5.3. 开放闭合
-## 5.4. 最小意外
-## 5.5. 单一职责(single responsibility)
+
+建议读者自行扩展
+
+- `DRY(dont't repeat yoursele: 不要重复你自己)`
+- `高内聚低耦合`
+- `开放闭合`
+- `最小意外`
+- `单一职责(single responsibility)`
 
 # 6. 高级技巧
-## 6.1. 函数柯里化
-## 6.2. 5
+
+## 6.1. 安全类型检测
+- javascript内置类型检测并不可靠
+- safari某些版本（<4）typeof正则表达式返回为function
+
+建议使用Object.prototype.toString.call()方法检测数据类型
+
+```
+function isArray(value){
+    return Object.prototype.toString.call(value) === "[object Array]";
+}
+
+function isFunction(value){
+    return Object.prototype.toString.call(value) === "[object Function]";
+}
+
+function isRegExp(value){
+    return Object.prototype.toString.call(value) === "[object RegExp]";
+}
+
+function isNativeJSON(){
+    return window.JSON && Object.prototype.toString.call(JSON) === "[object JSON]";
+}
+```
+
+`对于ie中一COM对象形式实现的任何函数，isFunction都返回false，因为他们并非原生的javascript函数。`
+
+**在web开发中，能够区分原生与非原生的对象非常重要。只有这样才能确切知道某个对象是否有哪些功能**
+
+以上所有的正确性的前提是：Object.prototype.toString没有被修改过
+
+
+## 6.2. 作用域安全的构造函数
+
+```
+function Person(name){
+    this.name = name;
+}
+
+//使用new来创建一个对象
+var one = new Person('wdd');
+
+//直接调用构造函数
+Person();
+```
+
+由于this是运行时分配的，如果你使用new来操作，this指向的就是one。如果直接调用构造函数，那么this会指向全局对象window,然后你的代码就会覆盖window的原生name。如果有其他地方使用过window.name, 那么你的函数将会埋下一个深藏的bug。
+
+`那么，如何才能创建一个作用域安全的构造函数？`
+
+
+```
+function Person(name){
+    if(this instanceof Person){
+        this.name = name;
+    }
+    else{
+        return new Person(name);
+    }
+}
+```
+
+## 6.3. 惰性载入函数
+假设有一个方法X，在A类浏览器里叫A,在b类浏览器里叫B,有些浏览器并没有这个方法,你想实现一个跨浏览器的方法。
+
+惰性载入函数的思想是：`在函数内部改变函数自身的执行逻辑`
+
+```
+function X(){
+    if(A){
+        return new A();
+    }
+    else{
+        if(B){
+            return new B();
+        }
+        else{
+            throw new Error('no A or B');
+        }
+    }
+}
+```
+
+换一种写法
+
+```
+function X(){
+    if(A){
+        X = function(){
+            return new A();
+        };
+    }
+    else{
+        if(B){
+            X = function(){
+                return new B();
+            };
+        }
+        else{
+            throw new Error('no A or B');
+        }
+    }
+    
+    return new X();
+}
+```
+
+## 6.4. 防篡改对象
+### 6.4.1. 不可扩展对象 Object.preventExtensions
+```
+// 下面代码在谷歌浏览器中执行
+> var person = {name: 'wdd'};
+undefined
+> Object.preventExtensions(person);
+Object {name: "wdd"}
+> person.age = 10
+10
+> person
+Object {name: "wdd"}
+> Object.isExtensible(person)
+false
+```
+
+### 6.4.2. 密封对象Object.seal
+密封对象不可扩展，并且不能删除对象的属性或者方法。但是属性值可以修改。
+```
+> var one = {name: 'hihi'}
+undefined
+> Object.seal(one)
+Object {name: "hihi"}
+> one.age = 12
+12
+> one
+Object {name: "hihi"}
+> delete one.name
+false
+> one
+Object {name: "hihi"}
+```
+
+### 6.4.3. 冻结对象 Object.freeze
+最严格的防篡改就是冻结对象。对象不可扩展，而且密封，不能修改。只能访问。
+
+## 6.5. 高级定时器
+### 6.5.1. 函数节流
+函数节流的思想是：`某些代码不可以没有间断的连续重复执行`
+```
+var processor = {
+	timeoutId: null,
+
+	// 实际进行处理的方法
+	performProcessing: function(){
+		...
+	},
+
+	// 初始化调用方法
+	process: function(){
+		clearTimeout(this.timeoutId);
+
+		var that = this;
+
+		this.timeoutId = setTimeout(function(){
+			that.performProcessing();
+		}, 100);
+	}
+}
+
+// 尝试开始执行
+processor.process();
+```
+
+### 6.5.2. 中央定时器
+页面如果有十个区域要动态显示当前时间，一般来说，可以用10个定时来实现。其实一个中央定时器就可以搞定。
+
+
+中央定时器动画 demo地址：http://wangduanduan.coding.me/my-all-demos/ninja/center-time-control.html
+
+```
+var timers = {
+		timerId: 0,
+		timers: [],
+		add: function(fn){
+			this.timers.push(fn);
+		},
+		start: function(){
+			if(this.timerId){
+				return;
+			}
+
+			(function runNext(){
+				if(timers.timers.length > 0){
+					for(var i=0; i < timers.timers.length ; i++){
+						if(timers.timers[i]() === false){
+							timers.timers.splice(i, 1);
+							i--;
+						}
+					}
+
+					timers.timerId = setTimeout(runNext, 16);
+				}
+			})();
+		},
+		stop: function(){
+			clearTimeout(timers.timerId);
+			this.timerId = 0;
+		}
+	};
+```
 
 # 7. 函数式编程
+
 
 # 8. HTML的告诫
 - 使用input的时候，一定要加上maxlength属性。（你以为只需要输入一个名字的地方，用户可能复制一篇文章放进去。）
@@ -738,25 +972,45 @@ ajax在使用的时候，例如点击按钮，获取某个列表。需要注意�
 ### 11.1.3. parcel
 
 
-# 12. 推荐深度阅读
-## 12.1. 关于技术
-- [《编写可读代码的艺术》][1]
-- [《编写可维护的JavaScript》][2]
-- [《JavaScript忍者秘籍》][3]
-- [《JavaScript: The Good Parts》][4]
-- [Writing Fast, Memory-Efficient JavaScript][5]
-- [JavaScript 秘密花园][6]
-- [You-Dont-Know-JS][7]
-- [《HTTP权威指南》][8]
-- [Caching Tutorial for Web Authors and Webmasters][9]
-- 《代码整洁之道》
+# 12. 协议 TCP IP HTTP
 
-## 12.2. 技术之外
-- [《筑巢引凤-高黏度社会化网站设计秘诀》][10]
-- [《黑客与画家》][11]
-- [《大秦帝国》][12]
+`如果你认为前端不需要关于协议的知识，那么你就是大错特错了。其实不仅仅是前端，所有的开发者都应该学习底层的协议。因为他们是互联网通信的基石。`
 
-# 13. 参考文献
+> 推荐三本必读的书籍
+
+- [HTTP权威指南](https://book.douban.com/subject/10746113/)
+- [图解TCP/IP : 第5版](https://book.douban.com/subject/24737674/)
+- [图解HTTP](https://book.douban.com/subject/25863515/)
+
+或者你一也可以看看关于协议方面的一些问题，以及如果你遇到过，你是否知道如何解决：
+
+- [可能被遗漏的https与http的知识点](https://wdd.js.org/you-dont-know-https-and-http.html)
+- [哑代理 - TCP链接高Recv-Q，内存泄露的罪魁祸首](https://wdd.js.org/tcp-high-recv-q-or-send-q-reasons.html)
+
+# 13. 推荐深度阅读
+## 13.1. 推荐阅读技术书籍
+
+- [编写可读代码的艺术](https://book.douban.com/subject/10797189/)
+- [编写可维护的JavaScript](https://book.douban.com/subject/21792530/)
+- [JavaScript忍者秘籍（第2版）](https://book.douban.com/subject/30143702/)
+- [JavaScript语言精粹](https://book.douban.com/subject/3590768/)
+- [HTTP权威指南](https://book.douban.com/subject/10746113/)
+- [图解TCP/IP : 第5版](https://book.douban.com/subject/24737674/)
+- [图解HTTP](https://book.douban.com/subject/25863515/)
+- [代码整洁之道](https://book.douban.com/subject/4199741/)
+
+## 13.2. 推荐阅读在线文章
+- [Writing Fast, Memory-Efficient JavaScript](https://www.smashingmagazine.com/2012/11/writing-fast-memory-efficient-javascript/)
+- [JavaScript 秘密花园](https://bonsaiden.github.io/JavaScript-Garden/zh/)
+- [You-Dont-Know-JS](https://github.com/getify/You-Dont-Know-JS)
+- [关于缓存，你应该链接的一切](https://www.mnot.net/cache_docs/)
+
+
+## 13.3. 技术之外
+- [筑巢引凤-高黏度社会化网站设计秘诀](https://book.douban.com/subject/5290566/)
+- [黑客与画家](https://book.douban.com/subject/6021440/)
+
+# 14. 参考文献
 - JavaScript高级程序设计(第3版) 【美】尼古拉斯·泽卡斯
 - Maintainable JavaScript (英文版) Nicholas C. Zakas(其实和上边那本书应该是同一个人)
 - JavaScript忍者秘籍 John Resig / Bear Bibeault （John Resig 大名鼎鼎jQuery的创造者）
