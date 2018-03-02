@@ -3,7 +3,7 @@
 > create by wdd
 > 一直会更新
 
-在线阅读：https://wdd.js.org/js-best-parctices/
+在线阅读：https://wdd.js.org/js-best-practices/#/
 
 效果预览：
 
