@@ -945,7 +945,7 @@ var timers = {
 ```
 
 # 7. 函数式编程
-
+推荐阅读：[JS函数式编程中文版](https://llh911001.gitbooks.io/mostly-adequate-guide-chinese/content/)
 
 # 8. HTML的告诫
 - 使用input的时候，一定要加上maxlength属性。（你以为只需要输入一个名字的地方，用户可能复制一篇文章放进去。）
@@ -1004,6 +1004,7 @@ ajax在使用的时候，例如点击按钮，获取某个列表。需要注意�
 - [JavaScript 秘密花园](https://bonsaiden.github.io/JavaScript-Garden/zh/)
 - [You-Dont-Know-JS](https://github.com/getify/You-Dont-Know-JS)
 - [关于缓存，你应该链接的一切](https://www.mnot.net/cache_docs/)
+- [JS函数式编程中文版](https://llh911001.gitbooks.io/mostly-adequate-guide-chinese/content/)
 
 
 ## 13.3. 技术之外
