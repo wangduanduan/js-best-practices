@@ -1109,18 +1109,25 @@ ajax在使用的时候，例如点击按钮，获取某个列表。需要注意�
 - [哑代理 - TCP链接高Recv-Q，内存泄露的罪魁祸首](https://wdd.js.org/tcp-high-recv-q-or-send-q-reasons.html)
 
 # 14. 推荐深度阅读
-## 14.1. 推荐阅读技术书籍
 
+## 14.1. 至少要读两遍的书籍
+- [JavaScript高级程序设计（第3版）](https://book.douban.com/subject/10546125/)
+- [ES6标准入门（第2版）](https://read.douban.com/ebook/35652061/?dcs=subject-rec&dcm=douban&dct=10546125)
+- [JavaScript语言精粹](https://book.douban.com/subject/3590768/)
+
+## 14.2. 推荐阅读技术书籍
+
+- [Node.js实战](https://book.douban.com/subject/25870705/)
 - [编写可读代码的艺术](https://book.douban.com/subject/10797189/)
 - [编写可维护的JavaScript](https://book.douban.com/subject/21792530/)
 - [JavaScript忍者秘籍（第2版）](https://book.douban.com/subject/30143702/)
-- [JavaScript语言精粹](https://book.douban.com/subject/3590768/)
 - [HTTP权威指南](https://book.douban.com/subject/10746113/)
 - [图解TCP/IP : 第5版](https://book.douban.com/subject/24737674/)
 - [图解HTTP](https://book.douban.com/subject/25863515/)
 - [代码整洁之道](https://book.douban.com/subject/4199741/)
+- [js函数式编程指南](https://llh911001.gitbooks.io/mostly-adequate-guide-chinese/content/)
 
-## 14.2. 推荐阅读在线文章
+## 14.3. 推荐阅读在线文章
 - [Writing Fast, Memory-Efficient JavaScript](https://www.smashingmagazine.com/2012/11/writing-fast-memory-efficient-javascript/)
 - [JavaScript 秘密花园](https://bonsaiden.github.io/JavaScript-Garden/zh/)
 - [You-Dont-Know-JS](https://github.com/getify/You-Dont-Know-JS)
@@ -1128,14 +1135,29 @@ ajax在使用的时候，例如点击按钮，获取某个列表。需要注意�
 - [JS函数式编程中文版](https://llh911001.gitbooks.io/mostly-adequate-guide-chinese/content/)
 
 
-## 14.3. 技术之外
+## 14.4. 技术之外
 - [筑巢引凤-高黏度社会化网站设计秘诀](https://book.douban.com/subject/5290566/)
 - [黑客与画家](https://book.douban.com/subject/6021440/)
 
-# 15. 参考文献
+# 15. 务必掌握的技能
+## 15.1. git
+- [Pro Git](https://git-scm.com/book/zh/v2)
+
+# 16. 务必掌握开发工具
+- [vscode](https://code.visualstudio.com/)
+
+# 17. 推荐关注的前端微信公众号
+
+- 前端开发
+- 前端大全
+- 前端周刊
+- 奇舞周刊
+- 前端之巅
+- FEX团队
+
+# 18. 参考文献
 - JavaScript高级程序设计(第3版) 【美】尼古拉斯·泽卡斯
 - Maintainable JavaScript (英文版) Nicholas C. Zakas(其实和上边那本书应该是同一个人)
 - JavaScript忍者秘籍 John Resig / Bear Bibeault （John Resig 大名鼎鼎jQuery的创造者）
 - [百度前端研发部 文档与源码编写风格](https://github.com/fex-team/styleguide)
-- [js函数式编程指南](https://llh911001.gitbooks.io/mostly-adequate-guide-chinese/content/)
 - [JavaScript SDK Design Guide: JavaScript-sdk设计指南](https://github.com/hueitan/javascript-sdk-design)
