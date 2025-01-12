@@ -5,7 +5,7 @@
 - [Google JavaScript Style Guide](https://google.github.io/styleguide/jsguide.html)
 - [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript)
 
-我自己使用的是`JavaScript Standard Style`, 我之所以使用这个，是因为它有一些工具。可以让你写完代码后，一旦保存，就自动帮你把你的风格的代码修正成标准分割，而不是死记硬背应该怎么写。看完这个页面，你就应该立马爱上[JavaScript Standard Style ](https://standardjs.com/readme-zhcn.html), 如果你用vscode, 恰好你有写vue, 你想在.vue文件中使用standard风格，那么你需要看看[这篇文章](https://segmentfault.com/a/1190000012468438)
+我自己使用的是`JavaScript Standard Style`, 我之所以使用这个，是因为它有一些工具。可以让你写完代码后，一旦保存，就自动帮你把你的风格的代码修正成标准风格，而不是死记硬背应该怎么写。看完这个页面，你就应该立马爱上[JavaScript Standard Style ](https://standardjs.com/readme-zhcn.html), 如果你用vscode, 恰好你有写vue, 你想在.vue文件中使用standard风格，那么你需要看看[这篇文章](https://segmentfault.com/a/1190000012468438)
 
 
 # 2. 可维护性
@@ -40,7 +40,7 @@
 - 方法之间
 - 方法里的局部变量和第一个语句之间
 - 单行或者多行注释
-- 方法内衣个逻辑单元之间
+- 方法内每个逻辑单元之间
 ```
 // Good
 if (wl && wl.length) {
@@ -98,7 +98,7 @@ make | create, set up, build, generate, compose, add ,new
 - 加入评论
 - 指出哪里有陷阱，需要注意
 - 言简意赅，不要啰嗦
-- 不要使用不明确的代词，不要像像算命先生，如何解释都对
+- 不要使用不明确的代词，不要像算命先生，如何解释都对
 
 
 #### 2.2.1.8. 可读性控制流
@@ -410,25 +410,25 @@ function isEmptyInput(id){
 
 
 ## 2.4. 编程实践
-### 2.4.1. 尊总对象所有权
-javascript动态性质是的几乎任何东西在任何时间都能更改，这样就很容易覆写了一些默认的方法。导致一些灾难性的后果。`如果你不负责或者维护某个对象，那么你就不能对它进行修改。`
+### 2.4.1. 尊重对象所有权
+javascript动态性质使得几乎任何东西在任何时间都能更改，这样就很容易覆写了一些默认的方法。导致一些灾难性的后果。`如果你不负责或者维护某个对象，那么你就不能对它进行修改。`
 
 - 不要为实例或原型添加属性
 - 不要为实例或者原型添加方法
-- 不要重定义存已存在的方法
+- 不要重复定义已存在的方法
 
 ### 2.4.2. 避免全局变量
 ```
 // Bad 两个全局变量
 var name = "wdd";
-funtion getName(){
+function getName(){
     console.log(name);
 }
 
 // Good 一个全局变量
 var App = {
     name:"wdd",
-    sayName:funtion(){
+    sayName:function(){
         console.log(this.name);//如果这个函数当做回调数使用，这个this可能指向window,
     }
 };
@@ -437,7 +437,7 @@ var App = {
 
 ### 2.4.3. 避免与null进行比较
 ```
-funtion sortArray(values){
+function sortArray(values){
     // 避免
     if(values != null){
         values.sort(comparator);
@@ -448,7 +448,7 @@ funtion sortArray(values){
 function sortArray(values){
     // 推荐
     if(values instanceof Array){
-        values.sort(compartor);
+        values.sort(comparator);
     }
 }
 ```
@@ -773,7 +773,7 @@ function myGetElement(tag){
 ```
 // 先看下面的极端情况
 app.user.mother.parent.home.name = 'wdd'
-app.user.mother.parent.home.adderess = '上海'
+app.user.mother.parent.home.address = '上海'
 app.user.mother.parent.home.weather = '晴天'
 
 // 更优雅的方式
@@ -826,7 +826,7 @@ Object.keys(obj).forEach((key) => {
 
 建议读者自行扩展
 
-- `DRY(dont't repeat yoursele: 不要重复你自己)`
+- `DRY(don't repeat yourself: 不要重复你自己)`
 - `高内聚低耦合`
 - `开放闭合`
 - `最小意外`
@@ -1005,12 +1005,13 @@ var processor = {
 
 	// 初始化调用方法
 	process: function(){
-		clearTimeout(this.timeoutId);
+        if (this.timeoutId) return;
 
 		var that = this;
 
 		this.timeoutId = setTimeout(function(){
 			that.performProcessing();
+            that.timeoutId = null;
 		}, 100);
 	}
 }
